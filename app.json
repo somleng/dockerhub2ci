@@ -1,0 +1,24 @@
+{
+  "name": "dockerhub2ci",
+  "description": "Handle Dockerhub Webhooks to trigger CI or perform other tasks",
+  "website": "https://github.com/dwilkie/dockerhub2ci",
+  "repository": "https://github.com/dwilkie/dockerhub2ci",
+  "scripts": {
+    "postdeploy": "bundle exec rake db:schema:load && bundle exec rake db:seed"
+  },
+  "env": {
+    "GEMFILE_LOAD_RUBY_VERSION": {
+      "description": "Load the ruby version in the Gemfile. Required by Heroku",
+      "value": "1"
+    },
+    "TRAVIS_TOKEN": {
+      "description": "API token for travis. You can generate this token by running 'travis token --org'",
+      "value": "REPLACE_ME"
+    },
+    "WEBHOOK_SUBSCRIBERS": {
+      "description": "A list of Webhook subscribers that will run when Dockerhub webhook is received (separated by ;)",
+      "value": "WebhookSubscriber::Travis"
+    }
+  }
+}
+
