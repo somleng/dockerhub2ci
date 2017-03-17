@@ -9,3 +9,9 @@ script:
 - bundle exec rake db:schema:load
 - bundle exec rake db:test:prepare
 - bundle exec rake
+deploy:
+  provider: heroku
+  api_key:
+    secure: SQPSjtmgbsbm8g7k4IBEaCI2xVbl7y8Af+CYsKE1LujHXFjmZi/poKK1H/q9UGkXs1tbg7h2ebAdMe7BXLhf5f0tcEWY2HC+Ve9tX9NgAu71BL/1uoMMB7PuPjl7FFAgy+RDirAqwuUfalhrvHkBy2m4hjBmfm9nkX5DsmlnKK2bOLPUhVYb0gC9+lQFlAR4CVr+AUFw+gHiPmYyIgsv8UdARTrJfjjE0F/RC8aTXnsh7yHeBfiFCGmvTKApoLp82E9L/rJvNaohtkmW2TAuRoENkEs/lWmwrIP9/RIXgb9x/Q+oBjcVv50O3DElK8LOc99P91EcoJlDpdhnskkTyrd61g1ufSpf08xLtcXbEce7aYH2YCE0WWmDb/J5AqSyz+dE1yM+kP10ANyLc2JOdv0gxFZCOUQYkns2+l6r7guZtOARn0dO5TdYU83jOqXjHJC8ot7d7440WuEfGnRw48EOE/Hk8qX6EIBS8oFPOwFgogfDU02KN3wt5cSZGs3zQiKeKNIwPU3MPmVWW2h1JSCCDSq1nszy5hh6IBIDDOxVjL6qbiewp4kEtswSi6ZL9A42EBpHtoG4BTNa85qzT/NbaB6tLomBbL0+zfvHawswVW4LjENsPm3Y4gFPRFeudCzGYc7Yh6DnpkVCpwU5gTUH+s66vDbI0eERdrBX3u0=
+  run:
+  - rake db:migrate
