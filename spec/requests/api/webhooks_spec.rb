@@ -34,7 +34,7 @@ describe "Webhooks API" do
 
   describe "POST '/api/webhooks'" do
     let(:asserted_tag) { "latest" }
-    let(:payload) { attributes_for(:webhook, :tag => asserted_tag)[:payload] }
+    let(:payload) { attributes_for(:webhook, :push_data_tag => asserted_tag)[:payload] }
     let(:params) { payload.to_json }
     let(:request_headers) { { "CONTENT_TYPE" => "application/json" } }
     let(:asserted_response_code) { "201" }

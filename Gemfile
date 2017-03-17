@@ -39,9 +39,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'responders'
 gem 'sucker_punch'
 gem 'wisper'
-
-# gems required for webhook subscribers
-gem 'travis'
+gem 'httparty'
 
 group :development, :test do
   gem 'pry'
@@ -62,6 +60,8 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'wisper-rspec'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

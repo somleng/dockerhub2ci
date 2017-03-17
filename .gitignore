@@ -17,3 +17,4 @@
 .byebug_history
 
 vendor/ruby
+remove_focus.rb

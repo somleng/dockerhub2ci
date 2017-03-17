@@ -7,7 +7,7 @@ describe Webhook do
     it { is_expected.to validate_presence_of(:push_data) }
   end
 
-  describe "events", :focus do
+  describe "events" do
     subject { build(factory) }
 
     def assert_broadcasted!(broadcast_method, &block)
@@ -19,7 +19,7 @@ describe Webhook do
 
   describe ".by_tag(tag)" do
     let(:tag) { "my-tag" }
-    let(:webhook) { create(factory, :tag => tag) }
+    let(:webhook) { create(factory, :push_data_tag => tag) }
 
     def setup_scenario
       webhook

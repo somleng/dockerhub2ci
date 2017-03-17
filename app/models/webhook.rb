@@ -13,6 +13,18 @@ class Webhook < ApplicationRecord
     payload_attribute("push_data")
   end
 
+  def repository
+    payload_attribute("repository")
+  end
+
+  def push_data_tag
+    push_data["tag"]
+  end
+
+  def repository_repo_name
+    repository["repo_name"]
+  end
+
   def broadcast_received!
     broadcast(:webhook_received, payload)
   end

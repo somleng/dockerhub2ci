@@ -1,0 +1,82 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.travis-ci.org/repo/dwilkie%2Fdockerhub2ci/requests
+    body:
+      encoding: UTF-8
+      string: '{"request":{"branch":"master"}}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Travis-Api-Version:
+      - '3'
+      Authorization:
+      - "<ENCODED AUTH HEADER>"
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Date:
+      - Fri, 17 Mar 2017 10:34:57 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '532'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - Content-Type, Cache-Control, Expires, Etag, Last-Modified
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Oauth-Scopes:
+      - public,private
+      Vary:
+      - Accept-Encoding
+      X-Rack-Cache:
+      - invalidate, pass
+      Via:
+      - 1.1 vegur
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "@type": "pending",
+          "remaining_requests": 9,
+          "repository": {
+            "@type": "repository",
+            "@href": "/repo/12575271",
+            "@representation": "minimal",
+            "id": 12575271,
+            "name": "dockerhub2ci",
+            "slug": "dwilkie/dockerhub2ci"
+          },
+          "request": {
+            "repository": {
+              "id": 85259177,
+              "owner_name": "dwilkie",
+              "name": "dockerhub2ci"
+            },
+            "user": {
+              "id": 918
+            },
+            "id": 63548378,
+            "message": null,
+            "branch": "master",
+            "config": {
+            }
+          },
+          "resource_type": "request"
+        }
+    http_version: 
+  recorded_at: Fri, 17 Mar 2017 10:34:58 GMT
+recorded_with: VCR 3.0.3
