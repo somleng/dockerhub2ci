@@ -2,9 +2,9 @@ language: ruby
 services:
 - postgresql
 addons:
-  postgresql: '9.4'
+  postgresql: '9.6'
 before_script:
-- psql -c 'create database "somleng-rtd_test";' -U postgres
+- psql -c 'create database "dockerhub2ci_test";' -U postgres
 script:
 - bundle exec rake db:schema:load
 - bundle exec rake db:test:prepare
