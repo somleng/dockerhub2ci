@@ -12,4 +12,9 @@ class Api::WebhooksController < Api::BaseController
   def build_resource
     @resource ||= association_chain.new(:payload => params)
   end
+
+  def trigger_resource_events
+    resource.subscribe(WebhookEventListener.new)
+    resource.broadcast_received!
+  end
 end

@@ -5,11 +5,9 @@ class Api::BaseController < ApplicationController
   respond_to :json
 
   def create
-    if save_resource?
-      build_resource
-      save_resource
-      respond_with_resource
-    end
+    build_resource
+    trigger_resource_events if save_resource
+    respond_with_resource
   end
 
   def show
@@ -41,11 +39,14 @@ class Api::BaseController < ApplicationController
   end
 
   def save_resource
-    resource.save
+    save_resource? ? resource.save : resource.valid?
   end
 
   def find_resource
     @resource = association_chain.find(params[:id])
+  end
+
+  def trigger_resource_events
   end
 
   def resource
@@ -53,6 +54,6 @@ class Api::BaseController < ApplicationController
   end
 
   def respond_with_resource
-    respond_with(:api, resource)
+    respond_with(:api, resource) if resource.persisted? || resource.errors.any?
   end
 end

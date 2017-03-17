@@ -1,9 +1,25 @@
 require 'rails_helper'
 
 describe Webhook do
-  describe "#by_tag(tag)" do
+  let(:factory) { :webhook }
+
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:push_data) }
+  end
+
+  describe "events", :focus do
+    subject { build(factory) }
+
+    def assert_broadcasted!(broadcast_method, &block)
+      expect { yield }.to broadcast(broadcast_method)
+    end
+
+    it("should broadcast") { assert_broadcasted!(:webhook_received) { subject.broadcast_received! } }
+  end
+
+  describe ".by_tag(tag)" do
     let(:tag) { "my-tag" }
-    let(:webhook) { create(:webhook, :tag => tag) }
+    let(:webhook) { create(factory, :tag => tag) }
 
     def setup_scenario
       webhook

@@ -36,6 +36,11 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'responders'
+gem 'sucker_punch'
+gem 'wisper'
+
+# gems required for webhook subscribers
+gem 'travis'
 
 group :development, :test do
   gem 'pry'
@@ -51,6 +56,11 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'wisper-rspec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
