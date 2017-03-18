@@ -60,6 +60,14 @@ https://api-key:@your-dockerhub2ci-app.herokuapp.com/api/webhooks
 
 Replace `api-key` with one of the keys you set in `API_KEYS` and replace `your-dockerhub2ci-app.herokuapp.com` with the domain of your dockerhub2ci instance. Don't forget the trailing colon (:) after the `api-key`
 
+![Dockerhub Webhook Settings](https://raw.githubusercontent.com/dwilkie/dockerhub2ci/master/docs/images/dockerhub-webhook-settings.png)
+
+## Turn off automated builds on your CI
+
+After you have setup dockerhub2ci to trigger builds you can turn off automated builds on your CI. Here's a screenshot of how to turn off automated builds on Travis.
+
+![Travis Repo Settings](https://raw.githubusercontent.com/dwilkie/dockerhub2ci/master/docs/images/travis-settings.png)
+
 ## Contributing
 
 dockerhub2ci use the [publish-subscribe pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) so that additional subscribers can be added with ease. Subscribers are configured using the `WEBHOOK_SUBSCRIBERS` environment variable (see [app.json](https://github.com/dwilkie/dockerhub2ci/blob/master/app.json) for more info).
