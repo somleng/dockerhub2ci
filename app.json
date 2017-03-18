@@ -11,21 +11,24 @@
       "description": "Load the ruby version in the Gemfile. Required by Heroku",
       "value": "1"
     },
-    "TRAVIS_TOKEN": {
-      "description": "API token for travis. You can generate this token by running 'travis token --org'",
-      "value": "REPLACE_ME"
+    "API_KEYS": {
+      "description": "One or more API keys that can be used by Dockerhub Webhooks to authenticate (separated by semicolons (;))",
+      "generator": "secret"
     },
     "WEBHOOK_SUBSCRIBERS": {
-      "description": "A list of Webhook subscribers that will run when Dockerhub webhook is received (separated by a semicolon (;))",
-      "value": "WebhookSubscriber::Travis"
+      "description": "A list of Webhook subscribers that will run when Dockerhub webhook is received (separated by semicolons (;))",
+      "value": "WebhookSubscriber::Travis",
+      "required": false
     },
-    "API_KEYS": {
-      "description": "A list of API keys that are used to by the Webhook to authenticate (separated by a semicolon (;))",
-      "value": "REPLACE_ME;API_KEY_1;API_KEY_2"
+    "TRAVIS_TOKEN": {
+      "description": "API token for travis. You can generate this token by running 'travis token'",
+      "value": "REPLACE_ME",
+      "required": false
     },
     "SAVE_WEBHOOKS": {
       "description": "Set this to 1 to keep a copy of the webhooks in the database",
-      "value": "0"
+      "value": "0",
+      "required": false
     }
   }
 }
