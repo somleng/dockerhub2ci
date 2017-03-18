@@ -1,10 +1,4 @@
 class WebhookSubscriber::Travis < WebhookSubscriber::Base
-  delegate :tag_mappings, :to => :class
-
-  DEFAULT_TAG_MAPPINGS = {
-    "latest" => "master"
-  }
-
   class TravisClient
     TRAVIS_ORG_ENDPOINT = "https://api.travis-ci.org"
     TRAVIS_PRO_ENDPOINT = "https://api.travis-ci.com"
@@ -50,23 +44,16 @@ class WebhookSubscriber::Travis < WebhookSubscriber::Base
 
   def perform!(payload)
     webhook = Webhook.new(:payload => payload)
-    repo_name = webhook.repository_repo_name
-    tag_name = webhook.push_data_tag
-    branch_name = tag_mappings[tag_name] || tag_name
-    Rails.logger.debug("Triggering Travis Build with repo: #{repo_name}, branch: #{branch_name}")
-    response = travis_client.create_request!(repo_name, branch_name)
+    dockerhub_repo_name = webhook.repository_repo_name
+    dockerhub_tag_name = webhook.push_data_tag
+    build_repo_name = repo_mappings[dockerhub_repo_name] || dockerhub_repo_name
+    build_branch_name = tag_mappings[dockerhub_tag_name] || dockerhub_tag_name
+    Rails.logger.debug("Triggering Travis Build with repo: #{build_repo_name}, branch: #{build_branch_name}")
+    response = travis_client.create_request!(build_repo_name, build_branch_name)
     Rails.logger.debug "Travis response: #{response}"
   end
 
   private
-
-  def self.tag_mappings
-    DEFAULT_TAG_MAPPINGS.merge(env_tag_mappings)
-  end
-
-  def self.env_tag_mappings
-    Hash[ENV["TAG_MAPPINGS"].to_s.split(";").map { |key_value| key_value.split("=") }]
-  end
 
   def travis_client
     @travis_client ||= TravisClient.new

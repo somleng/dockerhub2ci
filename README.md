@@ -26,9 +26,13 @@ See [app.json](https://github.com/dwilkie/dockerhub2ci/blob/master/app.json) for
 
 Optional configuration options are listed below:
 
+### `REPO_MAPPINGS`
+
+One or more Dockerhub repo to build repo name mappings (separated by semicolons (;)). For example if you want the Dockerhub repository `dwilkie-docker/dockerhub2ci` to trigger a build on `dwilkie/dockerhub2ci` set `REPO_MAPPINGS=dwilkie-docker/dockerhub2ci=dwilkie/dockerhub2ci`. If there is no mapping for the Dockerhub repo, it's assumed the build repo is the same as the Dockerhub repo.
+
 ### `TAG_MAPPINGS`
 
-One or more Docker tag to repository branch name mappings (separated by semicolons (;)). For example if you want the `lastest` tag to trigger a build on the `staging` branch and the `stable` tag to trigger a build on the master branch set `TAG_MAPPINGS=latest=staging;stable=master`. If there is no mapping for the tag, it's assumed the branch name is the same as the tag name.
+One or more Dockerhub tag to build branch name mappings (separated by semicolons (;)). For example if you want the `lastest` Dockerhub tag to trigger a build on the `staging` branch and the `stable` Dockerhub tag to trigger a build on the master branch set `TAG_MAPPINGS=latest=staging;stable=master`. If there is no mapping for the Dockerhub tag, it's assumed the build branch name is the same as the Dockerhub tag name.
 
 Defaults to `latest=master`
 

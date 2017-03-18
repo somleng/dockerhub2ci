@@ -7,6 +7,11 @@ VCR.configure do |c|
   c.filter_sensitive_data("<ENCODED AUTH HEADER>") do |interaction|
     interaction.request.headers["Authorization"].first
   end
+
+  c.register_request_matcher(:travis_api_request) do |actual, playback|
+    actual_uri = URI.parse(actual.uri)
+    actual.method == playback.method && actual_uri.path =~ /\A\/repo\/.+\/requests\z/
+  end
 end
 
 RSpec.configure do |config|

@@ -24,19 +24,21 @@ describe WebhookSubscriber::Travis do
     it { assert_webhook_received! }
   end
 
-  describe "#perform!(payload)", :vcr, :cassette => "travis_create_request" do
+  describe "#perform!(payload)", :vcr, :cassette => "travis_create_request", :vcr_options => {:match_requests_on => [:method, :travis_api_request]} do
     let(:tag) { "latest" }
     let(:travis_token) { "travis-token" }
-    let(:repo_user) { "dwilkie" }
-    let(:repo_name) { "dockerhub2ci" }
-    let(:repo_path) { "#{repo_user}/#{repo_name}" }
-    let(:payload) { create(:webhook, :push_data_tag => tag, :repository_repo_name => repo_path)[:payload] }
+    let(:dockerhub_repo_user) { "dwilkie" }
+    let(:dockerhub_repo_name) { "dockerhub2ci" }
+    let(:dockerhub_repo_path) { "#{dockerhub_repo_user}/#{dockerhub_repo_name}" }
+    let(:payload) { create(:webhook, :push_data_tag => tag, :repository_repo_name => dockerhub_repo_path)[:payload] }
 
-    let(:asserted_branch_name) { "master" }
+    let(:asserted_build_branch_name) { "master" }
     let(:asserted_content_type) { "application/json" }
     let(:asserted_api_version) { "3" }
     let(:asserted_host) { "api.travis-ci.org" }
-    let(:asserted_path) { "/repo/#{repo_user}%2F#{repo_name}/requests" }
+    let(:asserted_build_repo_user) { dockerhub_repo_user }
+    let(:asserted_build_repo_name) { dockerhub_repo_name }
+    let(:asserted_path) { "/repo/#{asserted_build_repo_user}%2F#{asserted_build_repo_name}/requests" }
     let(:asserted_authorization) { "token #{travis_token}" }
 
     def env
@@ -61,7 +63,7 @@ describe WebhookSubscriber::Travis do
     end
 
     def assert_perform!
-      expect(branch).to eq(asserted_branch_name)
+      expect(branch).to eq(asserted_build_branch_name)
       expect(headers["Content-Type"]).to eq(asserted_content_type)
       expect(headers["Accept"]).to eq(asserted_content_type)
       expect(headers["Travis-Api-Version"]).to eq(asserted_api_version)
@@ -74,7 +76,7 @@ describe WebhookSubscriber::Travis do
 
     context "tag other than 'latest'" do
       let(:tag) { "some_tag" }
-      let(:asserted_branch_name) { tag }
+      let(:asserted_build_branch_name) { tag }
 
       it { assert_perform! }
     end
@@ -82,10 +84,22 @@ describe WebhookSubscriber::Travis do
     context "with tag_mappings" do
       let(:tag) { "some_tag" }
       let(:branch_name) { "staging" }
-      let(:asserted_branch_name) { branch_name }
+      let(:asserted_build_branch_name) { branch_name }
 
       def env
         super.merge(:tag_mappings => "#{tag}=#{branch_name}")
+      end
+
+      it { assert_perform! }
+    end
+
+    context "with repo_mappings" do
+      let(:asserted_build_repo_user) { "another-user" }
+      let(:asserted_build_repo_name) { "some-gh-repo" }
+      let(:asserted_build_repo_path) { "#{asserted_build_repo_user}/#{asserted_build_repo_name}" }
+
+      def env
+        super.merge(:repo_mappings => "#{dockerhub_repo_path}=#{asserted_build_repo_path}")
       end
 
       it { assert_perform! }
