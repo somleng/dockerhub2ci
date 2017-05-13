@@ -16,5 +16,9 @@
 # Ignore Byebug command history file.
 .byebug_history
 
+# SimpleCov
+coverage
+
+# misc
 vendor/ruby
 remove_focus.rb

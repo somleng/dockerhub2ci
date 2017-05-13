@@ -1,17 +1,22 @@
 language: ruby
 services:
-- postgresql
+  - postgresql
 addons:
   postgresql: '9.4'
+  code_climate:
+    repo_token:
+      secure: "A6wPo2b32cIBo1B9DWvQH/i7mfHNg6oX9UNyxthGsHi5cktIuc3P/p3kgG7DV/1xlkdLmHibSWxzOg+mdFim/5kqQ8hC7MWn91V+gsk+HIQF5C0Wye53eR09QGRG1TfNLpMsa33krXxkSBniV5pqkL5hHK590IeLYYgkw7FitjEhmomQpojLW6aFRJRm8yoEJmCQG4sdhw0V2IK1SVCwSe8mxyVGTPgUiIh2b670bwjV94oYd7iLYwE7HC7uqXX9JOHYSWZQi6PFk4szAMC2VoruPuqnCPDwux10dJ5Z8+iU3WpsGMzha/mnJVAudBqMGNhzLru1BAzw7BHDdpkNUaXwGvgauMEmnw2pXF5WSjkDddjyOehCLM0En8D0xJFinwdfjvpN3WBJWOp3a3jcEzSM75pEqBTS/MCwaacr+GmUa0DFiVCTs1D8T8cZ0nxZurTWo4AObESde9MaojreIGiCqmzabksHxm3ZM4ptYISpZzs90csAe5lw+VZvrqDploNT/9Maw+n8CO5B4aV/T5zKxxdpEKWk+TOIJ+6n60eR5cEzMDHnI38Lr3WGpUh1GKTiMX8wBApCY3v7Phvjet40pwWMCjnbGUBOc9ml4il7NxvFtHWN/fbzDHBxAuqew2PfnOVdKcBntZwHUQYpSUhReQtIKE4g8ceGZf065R8="
 before_script:
-- psql -c 'create database "dockerhub2ci_test";' -U postgres
+  - psql -c 'create database "dockerhub2ci_test";' -U postgres
 script:
-- bundle exec rake db:schema:load
-- bundle exec rake db:test:prepare
-- bundle exec rake
+  - bundle exec rake db:schema:load
+  - bundle exec rake db:test:prepare
+  - bundle exec rake
+after_success:
+  - bundle exec codeclimate-test-reporter
 deploy:
   provider: heroku
   api_key:
     secure: SQPSjtmgbsbm8g7k4IBEaCI2xVbl7y8Af+CYsKE1LujHXFjmZi/poKK1H/q9UGkXs1tbg7h2ebAdMe7BXLhf5f0tcEWY2HC+Ve9tX9NgAu71BL/1uoMMB7PuPjl7FFAgy+RDirAqwuUfalhrvHkBy2m4hjBmfm9nkX5DsmlnKK2bOLPUhVYb0gC9+lQFlAR4CVr+AUFw+gHiPmYyIgsv8UdARTrJfjjE0F/RC8aTXnsh7yHeBfiFCGmvTKApoLp82E9L/rJvNaohtkmW2TAuRoENkEs/lWmwrIP9/RIXgb9x/Q+oBjcVv50O3DElK8LOc99P91EcoJlDpdhnskkTyrd61g1ufSpf08xLtcXbEce7aYH2YCE0WWmDb/J5AqSyz+dE1yM+kP10ANyLc2JOdv0gxFZCOUQYkns2+l6r7guZtOARn0dO5TdYU83jOqXjHJC8ot7d7440WuEfGnRw48EOE/Hk8qX6EIBS8oFPOwFgogfDU02KN3wt5cSZGs3zQiKeKNIwPU3MPmVWW2h1JSCCDSq1nszy5hh6IBIDDOxVjL6qbiewp4kEtswSi6ZL9A42EBpHtoG4BTNa85qzT/NbaB6tLomBbL0+zfvHawswVW4LjENsPm3Y4gFPRFeudCzGYc7Yh6DnpkVCpwU5gTUH+s66vDbI0eERdrBX3u0=
   run:
-  - rake db:migrate
+    - rake db:migrate

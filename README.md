@@ -1,6 +1,7 @@
 # dockerhub2ci
 
 [![Build Status](https://travis-ci.org/dwilkie/dockerhub2ci.svg?branch=master)](https://travis-ci.org/dwilkie/dockerhub2ci)
+[![Test Coverage](https://codeclimate.com/github/dwilkie/dockerhub2ci/badges/coverage.svg)](https://codeclimate.com/github/dwilkie/dockerhub2ci/coverage)
 
 dockerhub2ci handles Dockerhub's Webhooks so you can trigger CI on a successful build. It has built in support for [Travis](https://travis-ci.org/).
 

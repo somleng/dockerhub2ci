@@ -66,6 +66,8 @@ group :test do
   gem 'wisper-rspec'
   gem 'vcr'
   gem 'webmock'
+  gem "simplecov", :require => false
+  gem "codeclimate-test-reporter", "~> 1.0.0"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
