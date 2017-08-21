@@ -1,7 +1,7 @@
 # dockerhub2ci
 
-[![Build Status](https://travis-ci.org/dwilkie/dockerhub2ci.svg?branch=master)](https://travis-ci.org/dwilkie/dockerhub2ci)
-[![Test Coverage](https://codeclimate.com/github/dwilkie/dockerhub2ci/badges/coverage.svg)](https://codeclimate.com/github/dwilkie/dockerhub2ci/coverage)
+[![Build Status](https://travis-ci.org/somleng/dockerhub2ci.svg?branch=master)](https://travis-ci.org/somleng/dockerhub2ci)
+[![Test Coverage](https://codeclimate.com/github/somleng/dockerhub2ci/badges/coverage.svg)](https://codeclimate.com/github/somleng/dockerhub2ci/coverage)
 
 dockerhub2ci handles Dockerhub's Webhooks so you can trigger CI on a successful build. It has built in support for [Travis](https://travis-ci.org/).
 
@@ -23,13 +23,13 @@ Using dockerhub2ci you can setup the following workflow:
 
 ## Configuration
 
-See [app.json](https://github.com/dwilkie/dockerhub2ci/blob/master/app.json) for list of the main configuration options.
+See [app.json](https://github.com/somleng/dockerhub2ci/blob/master/app.json) for list of the main configuration options.
 
 Optional configuration options are listed below:
 
 ### `REPO_MAPPINGS`
 
-One or more Dockerhub repo to build repo name mappings (separated by semicolons (;)). For example if you want the Dockerhub repository `dwilkie-docker/dockerhub2ci` to trigger a build on `dwilkie/dockerhub2ci` set `REPO_MAPPINGS=dwilkie-docker/dockerhub2ci=dwilkie/dockerhub2ci`. If there is no mapping for the Dockerhub repo, it's assumed the build repo is the same as the Dockerhub repo.
+One or more Dockerhub repo to build repo name mappings (separated by semicolons (;)). For example if you want the Dockerhub repository `somleng-docker/dockerhub2ci` to trigger a build on `somleng/dockerhub2ci` set `REPO_MAPPINGS=somleng-docker/dockerhub2ci=somleng/dockerhub2ci`. If there is no mapping for the Dockerhub repo, it's assumed the build repo is the same as the Dockerhub repo.
 
 ### `TAG_MAPPINGS`
 
@@ -65,19 +65,19 @@ https://api-key:@your-dockerhub2ci-app.herokuapp.com/api/webhooks
 
 Replace `api-key` with one of the keys you set in `API_KEYS` and replace `your-dockerhub2ci-app.herokuapp.com` with the domain of your dockerhub2ci instance. Don't forget the trailing colon (:) after the `api-key`
 
-![Dockerhub Webhook Settings](https://raw.githubusercontent.com/dwilkie/dockerhub2ci/master/docs/images/dockerhub-webhook-settings.png)
+![Dockerhub Webhook Settings](https://raw.githubusercontent.com/somleng/dockerhub2ci/master/docs/images/dockerhub-webhook-settings.png)
 
 ## Turn off automated builds on your CI
 
 After you have setup dockerhub2ci to trigger builds you can turn off automated builds on your CI. Here's a screenshot of how to turn off automated builds on Travis.
 
-![Travis Repo Settings](https://raw.githubusercontent.com/dwilkie/dockerhub2ci/master/docs/images/travis-settings.png)
+![Travis Repo Settings](https://raw.githubusercontent.com/somleng/dockerhub2ci/master/docs/images/travis-settings.png)
 
 ## Contributing
 
-dockerhub2ci use the [publish-subscribe pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) so that additional subscribers can be added with ease. Subscribers are configured using the `WEBHOOK_SUBSCRIBERS` environment variable (see [app.json](https://github.com/dwilkie/dockerhub2ci/blob/master/app.json) for more info).
+dockerhub2ci use the [publish-subscribe pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) so that additional subscribers can be added with ease. Subscribers are configured using the `WEBHOOK_SUBSCRIBERS` environment variable (see [app.json](https://github.com/somleng/dockerhub2ci/blob/master/app.json) for more info).
 
-A subscriber just needs to implement the `perform!` method which takes one argument which is the payload from the Dockerhub webhook (see [WebhookSubscriber::Travis](https://github.com/dwilkie/dockerhub2ci/blob/master/app/models/webhook_subscriber/travis.rb) for an example).
+A subscriber just needs to implement the `perform!` method which takes one argument which is the payload from the Dockerhub webhook (see [WebhookSubscriber::Travis](https://github.com/somleng/dockerhub2ci/blob/master/app/models/webhook_subscriber/travis.rb) for an example).
 
 ## License
 
