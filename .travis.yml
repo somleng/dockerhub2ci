@@ -8,6 +8,8 @@ addons:
       secure: "A6wPo2b32cIBo1B9DWvQH/i7mfHNg6oX9UNyxthGsHi5cktIuc3P/p3kgG7DV/1xlkdLmHibSWxzOg+mdFim/5kqQ8hC7MWn91V+gsk+HIQF5C0Wye53eR09QGRG1TfNLpMsa33krXxkSBniV5pqkL5hHK590IeLYYgkw7FitjEhmomQpojLW6aFRJRm8yoEJmCQG4sdhw0V2IK1SVCwSe8mxyVGTPgUiIh2b670bwjV94oYd7iLYwE7HC7uqXX9JOHYSWZQi6PFk4szAMC2VoruPuqnCPDwux10dJ5Z8+iU3WpsGMzha/mnJVAudBqMGNhzLru1BAzw7BHDdpkNUaXwGvgauMEmnw2pXF5WSjkDddjyOehCLM0En8D0xJFinwdfjvpN3WBJWOp3a3jcEzSM75pEqBTS/MCwaacr+GmUa0DFiVCTs1D8T8cZ0nxZurTWo4AObESde9MaojreIGiCqmzabksHxm3ZM4ptYISpZzs90csAe5lw+VZvrqDploNT/9Maw+n8CO5B4aV/T5zKxxdpEKWk+TOIJ+6n60eR5cEzMDHnI38Lr3WGpUh1GKTiMX8wBApCY3v7Phvjet40pwWMCjnbGUBOc9ml4il7NxvFtHWN/fbzDHBxAuqew2PfnOVdKcBntZwHUQYpSUhReQtIKE4g8ceGZf065R8="
 before_script:
   - psql -c 'create database "dockerhub2ci_test";' -U postgres
+env:
+  - START_SIMPLECOV=1
 script:
   - bundle exec rake db:schema:load
   - bundle exec rake db:test:prepare
