@@ -9,7 +9,8 @@ addons:
 before_script:
   - psql -c 'create database "dockerhub2ci_test";' -U postgres
 env:
-  - START_SIMPLECOV=1
+  global:
+    - START_SIMPLECOV=1
 script:
   - bundle exec rake db:schema:load
   - bundle exec rake db:test:prepare
