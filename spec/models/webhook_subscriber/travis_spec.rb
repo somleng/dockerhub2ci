@@ -51,7 +51,9 @@ describe WebhookSubscriber::Travis do
     let(:uri) { request.uri }
     let(:request_body) { JSON.parse(request.body) }
     let(:headers) { request.headers }
-    let(:branch) { request_body["request"]["branch"] }
+    let(:request_payload) { request_body["request"] }
+    let(:branch) { request_payload["branch"] }
+    let(:config) { request_payload["config"] }
 
     def setup_scenario
       stub_env(env)
@@ -64,6 +66,9 @@ describe WebhookSubscriber::Travis do
 
     def assert_perform!
       expect(branch).to eq(asserted_build_branch_name)
+      expect(config["merge_mode"]).to eq("merge")
+      expect(config["sudo"]).to eq("required")
+      expect(config["env"]["matrix"]).to eq(["DOCKER=1"])
       expect(headers["Content-Type"]).to eq(asserted_content_type)
       expect(headers["Accept"]).to eq(asserted_content_type)
       expect(headers["Travis-Api-Version"]).to eq(asserted_api_version)

@@ -34,11 +34,21 @@ class WebhookSubscriber::Travis < WebhookSubscriber::Base
     end
 
     def request_body(branch)
-      {"request" => {"branch" => branch}}.to_json
+      {"request" => {"branch" => branch, "config" => config}}.to_json
     end
 
     def requests_endpoint(repo_name)
       endpoint + "/repo/#{CGI.escape(repo_name)}/requests"
+    end
+
+    def config
+      {
+        "merge_mode" => "merge",
+        "sudo" => "required",
+        "env" => {
+          "matrix" => ["DOCKER=1"]
+        }
+      }
     end
   end
 
