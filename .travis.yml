@@ -1,22 +1,25 @@
 language: ruby
-services:
-  - postgresql
+cache: bundler
 addons:
-  postgresql: '9.4'
-  code_climate:
-    repo_token:
-      secure: "IKDGTPnFNfa4JJvuajEZpD3OyH4vlUsO/GvOpikYjr6JwZi1n/V+B8dJGfy0zJ2sQ+ttpIUzXeu1FrM24QnDNL6y+Z9avUZzHoAdVH2DifhUIo/LrdZFFlISKhS/tjOMqZNwYK2Az16VF6NRVHr+N9m0evRLzCHdgj8gqGO9qTVtISd6CgDAcuMdygOtw7OD2+Kc8Ew7PLymnoLGEwmFXpi+N/gkYdTgd2fEIppRRvVKMb5e0qslHn1gaa6JvZzd1JwY3GSd03p416WjyNFk16Z4ipK9Je1n3LPMI6rijQclsv+0R/ia11Slc8yoOdvQiFsyajAMiAD598KcowfJp7SXVuPRCwnl28nssyFgyh6VhgDUdEQxpOuBRyXN/pIl6f4oDkhK88SgYK/IOhfi7l1swF4acViOr1Bw9X9Rk1b4vkXAaI8I5cQ7FV6LGbba27cQEAxAet3WoR819qrdag6SnmK2yIFSj8OtU9E0GBYmEieP63TMDO3iQgd3/56dTd1yhlZL3EI8a+iwZs1CcgHIM13tTsbp2TwQgC5DTVuhg7pJZNegaupdOiMh3NjpF0JngtaiGvzvBvpwmktMKSyNMfnk+l98qIp521p96w9DLJd+WwcHaepscm8AYVjvRt8KLEDnwv0OrO+h9c4Pyaimc91mOWuWEpmd4jk0jB8="
-before_script:
-  - psql -c 'create database "dockerhub2ci_test";' -U postgres
+  postgresql: '10'
+  apt:
+    packages:
+      - postgresql-10
+      - postgresql-client-10
 env:
   global:
-    - START_SIMPLECOV=1
-script:
-  - bundle exec rake db:schema:load
-  - bundle exec rake db:test:prepare
-  - bundle exec rake
+    - PGPORT=5433
+    - CC_TEST_REPORTER_ID=a8240a2f8590c389a261446d24ef10a3566b98ae6c4102d7c34cc3819796d0ff
+    - CODECOV_TOKEN=1ddaca38-6253-4244-80c1-f3ee40a3ab19
+before_install:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - gem install bundler
+before_script:
+  - psql -c 'create database twilreapi_test;' -U travis
+  - ./cc-test-reporter before-build
 after_success:
-  - bundle exec codeclimate-test-reporter
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 deploy:
   provider: heroku
   api_key:
