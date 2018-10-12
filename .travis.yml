@@ -4,28 +4,29 @@ addons:
   postgresql: '10'
   apt:
     packages:
-      - postgresql-10
-      - postgresql-client-10
+    - postgresql-10
+    - postgresql-client-10
 env:
   global:
-    - PGPORT=5433
-    - CC_TEST_REPORTER_ID=a8240a2f8590c389a261446d24ef10a3566b98ae6c4102d7c34cc3819796d0ff
-    - CODECOV_TOKEN=1ddaca38-6253-4244-80c1-f3ee40a3ab19
+  - PGPORT=5433
+  - CC_TEST_REPORTER_ID=a8240a2f8590c389a261446d24ef10a3566b98ae6c4102d7c34cc3819796d0ff
+  - CODECOV_TOKEN=1ddaca38-6253-4244-80c1-f3ee40a3ab19
 before_install:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - gem install bundler
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- gem install bundler
 before_script:
-  - psql -c 'create database dockerhub2ci_test;' -U travis
-  - ./cc-test-reporter before-build
+- psql -c 'create database dockerhub2ci_test;' -U travis
+- "./cc-test-reporter before-build"
 after_success:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 deploy:
   provider: heroku
   on:
     repo: somleng/dockerhub2ci
     branch: develop
   api_key:
-    secure: SQPSjtmgbsbm8g7k4IBEaCI2xVbl7y8Af+CYsKE1LujHXFjmZi/poKK1H/q9UGkXs1tbg7h2ebAdMe7BXLhf5f0tcEWY2HC+Ve9tX9NgAu71BL/1uoMMB7PuPjl7FFAgy+RDirAqwuUfalhrvHkBy2m4hjBmfm9nkX5DsmlnKK2bOLPUhVYb0gC9+lQFlAR4CVr+AUFw+gHiPmYyIgsv8UdARTrJfjjE0F/RC8aTXnsh7yHeBfiFCGmvTKApoLp82E9L/rJvNaohtkmW2TAuRoENkEs/lWmwrIP9/RIXgb9x/Q+oBjcVv50O3DElK8LOc99P91EcoJlDpdhnskkTyrd61g1ufSpf08xLtcXbEce7aYH2YCE0WWmDb/J5AqSyz+dE1yM+kP10ANyLc2JOdv0gxFZCOUQYkns2+l6r7guZtOARn0dO5TdYU83jOqXjHJC8ot7d7440WuEfGnRw48EOE/Hk8qX6EIBS8oFPOwFgogfDU02KN3wt5cSZGs3zQiKeKNIwPU3MPmVWW2h1JSCCDSq1nszy5hh6IBIDDOxVjL6qbiewp4kEtswSi6ZL9A42EBpHtoG4BTNa85qzT/NbaB6tLomBbL0+zfvHawswVW4LjENsPm3Y4gFPRFeudCzGYc7Yh6DnpkVCpwU5gTUH+s66vDbI0eERdrBX3u0=
+    secure: O0FF5u+V7T2vqf+tuOUHjM/C+/narvfijj4Zl/d5L9gQs88ZVNxveKpL2z7LRi+q+WUbzB7aF1uVbIKnbq9TubouaCi8VYkn0PybpMBW8MSA2IC54DlpU4qqwUXffBPsAGh/rF1Q7d35k51/S1luI8jUcgM1YOiqkTV0Z8TEDzT/CakgWtT/185TlbabJOnlURC0xWhERtedW8IoyNtEvaQQDpP16zRKfo33VOs3yO4oRASHPNbuCtjbGP1OsZFf9/6xpk1AFU/Ea+7eB189p/o+AjAN4jBVMdwWH8o9FNRXcvenOlunk8nJWYXXB4CqfaNj70gh9UUGcanu3x0ceUz2GAcNarAs20bVPCagrpq7gbV5TeB6B9mDn8PykAwGn1O1yRBJYGKt2wKQ7FSdgw/MnoER5Z//vxV1x4shIkfEoM1VkjjxnQjkqiIxpcQz+6MxqF5HfStvjC3fzmmoLEMD8XYEBK5e7O1QwMpZqCi2ZtY/z+wzQUBR1oMqfGuiJonSdMXW8qtHV9Q2h+YDFFFaShZ42H2vQoxs773+PjlKwMqX0nK/RTOWTJTxRxfENxIQXdKHxgn/jefaibMacuzaK1t663QOMPKQ4t+b/S4so72RkkVYrWxawP6FF0C3A/NMUwk3+OuSanuFu2TKEGTyaN5VMfC3dSiEOKoMKMQ=
   run:
-    - rake db:migrate
+  - rake db:migrate
