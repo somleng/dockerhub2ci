@@ -7,7 +7,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem "coffee-rails", "~> 4.2"
 gem "jbuilder", "~> 2.5"
 gem "jquery-rails"
-gem "pg", "~> 0.18"
+gem "pg", "~> 1.1"
 gem "puma", "~> 3.0"
 gem "rails", "~> 5.0.2"
 gem "sass-rails", "~> 5.0"
