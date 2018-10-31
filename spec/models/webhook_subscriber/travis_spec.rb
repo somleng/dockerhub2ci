@@ -98,6 +98,46 @@ describe WebhookSubscriber::Travis do
       it { assert_perform! }
     end
 
+    context "with tag mapping to empty branch name" do
+      let(:tag) { "some_tag" }
+      let(:branch_name) { "" }
+
+      def env
+        super.merge(:tag_mappings => "#{tag}=#{branch_name}")
+      end
+
+      def assert_response!
+        expect(request).to be_nil
+      end
+
+      it { assert_response! }
+    end
+
+    context "with tag passthrough disabled" do
+      let(:tag) { "some_tag" }
+
+      def env
+        super.merge(:disable_tag_passthrough => "1")
+      end
+
+      def assert_response!
+        expect(request).to be_nil
+      end
+
+      it { assert_response! }
+    end
+
+    context "with tag passthrough enabled" do
+      let(:tag) { "some_tag" }
+      let(:asserted_build_branch_name) { tag }
+
+      def env
+        super.merge(:disable_tag_passthrough => "0")
+      end
+
+      it { assert_perform! }
+    end
+
     context "with repo_mappings" do
       let(:asserted_build_repo_user) { "another-user" }
       let(:asserted_build_repo_name) { "some-gh-repo" }

@@ -57,7 +57,18 @@ class WebhookSubscriber::Travis < WebhookSubscriber::Base
     dockerhub_repo_name = webhook.repository_repo_name
     dockerhub_tag_name = webhook.push_data_tag
     build_repo_name = repo_mappings[dockerhub_repo_name] || dockerhub_repo_name
-    build_branch_name = tag_mappings[dockerhub_tag_name] || dockerhub_tag_name
+
+    build_branch_name = nil
+    if tag_mappings.key?(dockerhub_tag_name)
+      build_branch_name = tag_mappings[dockerhub_tag_name]
+    elsif tag_passthrough?
+      build_branch_name = dockerhub_tag_name
+    end
+    if build_branch_name.blank?
+      Rails.logger.debug("Empty branch name given, skipping.")
+      return
+    end
+
     Rails.logger.debug("Triggering Travis Build with repo: #{build_repo_name}, branch: #{build_branch_name}")
     response = travis_client.create_request!(build_repo_name, build_branch_name)
     Rails.logger.debug "Travis response: #{response}"

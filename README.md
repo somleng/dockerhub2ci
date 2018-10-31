@@ -28,13 +28,19 @@ See [app.json](https://github.com/somleng/dockerhub2ci/blob/master/app.json) for
 
 Optional configuration options are listed below:
 
+### `DISABLE_TAG_PASSTHROUGH`
+
+By default all Dockerhub tags will be used to trigger builds using the same branch name, unless name remapping is defined with `TAG_MAPPINGS`. Should you want to only rely on `TAG_MAPPINGS` and prevent any unknown Dockerhub tags from triggering build, set this to `1`.
+
+Defaults to `0`
+
 ### `REPO_MAPPINGS`
 
 One or more Dockerhub repo to build repo name mappings (separated by semicolons (;)). For example if you want the Dockerhub repository `somleng-docker/dockerhub2ci` to trigger a build on `somleng/dockerhub2ci` set `REPO_MAPPINGS=somleng-docker/dockerhub2ci=somleng/dockerhub2ci`. If there is no mapping for the Dockerhub repo, it's assumed the build repo is the same as the Dockerhub repo.
 
 ### `TAG_MAPPINGS`
 
-One or more Dockerhub tag to build branch name mappings (separated by semicolons (;)). For example if you want the `lastest` Dockerhub tag to trigger a build on the `staging` branch and the `stable` Dockerhub tag to trigger a build on the master branch set `TAG_MAPPINGS=latest=staging;stable=master`. If there is no mapping for the Dockerhub tag, it's assumed the build branch name is the same as the Dockerhub tag name.
+One or more Dockerhub tag to build branch name mappings (separated by semicolons (;)). For example if you want the `lastest` Dockerhub tag to trigger a build on the `staging` branch and the `stable` Dockerhub tag to trigger a build on the master branch set `TAG_MAPPINGS=latest=staging;stable=master`. If there is no mapping for the Dockerhub tag, it's assumed the build branch name is the same as the Dockerhub tag name. However if a mapping for the Dockerhub tag does exist but is empty, then it will be skipped: no builds for this tag will be triggered. 
 
 Defaults to `latest=master`
 
