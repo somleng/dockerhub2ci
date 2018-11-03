@@ -1,5 +1,5 @@
 class WebhookSubscriber::Base
-  delegate :tag_mappings, :repo_mappings, :to => :class
+  delegate :tag_mappings, :tag_passthrough?, :repo_mappings, :to => :class
 
   DEFAULT_TAG_MAPPINGS = {
     "latest" => "master"
@@ -15,12 +15,20 @@ class WebhookSubscriber::Base
     DEFAULT_TAG_MAPPINGS.merge(env_tag_mappings)
   end
 
+  def self.tag_passthrough?
+    env_tag_passthrough?
+  end
+
   def self.repo_mappings
     env_repo_mappings
   end
 
   def self.env_tag_mappings
     parse_key_value_pairs(ENV["TAG_MAPPINGS"])
+  end
+
+  def self.env_tag_passthrough?
+    ENV["DISABLE_TAG_PASSTHROUGH"].to_i.zero?
   end
 
   def self.env_repo_mappings
