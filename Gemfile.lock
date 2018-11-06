@@ -55,7 +55,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.0.5)
+    concurrent-ruby (1.1.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.4)
@@ -76,7 +76,7 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.1.1)
       concurrent-ruby (~> 1.0)
-    jbuilder (2.7.0)
+    jbuilder (2.8.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
     jquery-rails (4.3.3)
@@ -234,7 +234,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   factory_girl_rails
   httparty
-  jbuilder (~> 2.5)
+  jbuilder (~> 2.8)
   jquery-rails
   listen (~> 3.1.5)
   pg (~> 1.1)
